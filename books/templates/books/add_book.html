@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>➕ افزودن کتاب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+        .card {
+            max-width: 520px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 30px 60px rgba(0, 20, 30, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            background: linear-gradient(135deg, #1e2b3c, #0f1a2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e2b3c;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #dce6ed;
+            border-radius: 18px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #1e2b3c;
+            box-shadow: 0 0 0 4px rgba(30, 43, 60, 0.08);
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            flex: 1 0 auto;
+        }
+        .btn-primary {
+            background: #1e2b3c;
+            color: white;
+            box-shadow: 0 8px 18px rgba(0,20,30,0.06);
+        }
+        .btn-primary:hover {
+            background: #0f1a2b;
+            transform: scale(1.02);
+        }
+        .btn-secondary {
+            background: #eef4f9;
+            color: #1e2b3c;
+        }
+        .btn-secondary:hover {
+            background: #dce6ed;
+        }
+        .errorlist {
+            color: #b13e3e;
+            font-size: 0.85rem;
+            list-style: none;
+            margin-top: 0.2rem;
+        }
+        @media (max-width: 480px) {
+            .card { padding: 1.8rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>➕ کتاب جدید</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">💾 ذخیره</button>
+                <a href="{% url 'book_list' %}" class="btn btn-secondary">↩️ بازگشت</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
